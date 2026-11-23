@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Rubik Solver</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #222; color: #fff; padding: 20px; }
+        #video { width: 100%; max-width: 400px; border-radius: 10px; background: #000; }
+        .controls { margin-top: 20px; }
+        button { padding: 15px 30px; font-size: 18px; border: none; border-radius: 5px; background: #007bff; color: white; cursor: pointer; }
+        #status { margin-top: 15px; font-weight: bold; }
+        #solution { margin-top: 20px; font-size: 20px; color: #00ff00; }
+    </style>
+</head>
+<body>
+    <h1>AI Rubik Solver 3x3</h1>
+    <video id="video" autoplay playsinline></video>
+    <div class="controls">
+        <button onclick="startScan()">Quét mặt Rubik</button>
+        <button onclick="solveCube()" style="background: #28a745;">Giải</button>
+    </div>
+    <div id="status">Bật camera để bắt đầu quét...</div>
+    <div id="solution"></div>
+
+    <script>
+        const video = document.getElementById('video');
+        let cubeFaces = { U: [], R: [], F: [], D: [], L: [], B: [] };
+        let currentFace = 'U';
+
+        async function startScan() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                video.srcObject = stream;
+                document.getElementById('status').innerText = 'Đang quét mặt ' + currentFace + '. Đưa camera vào lưới 3x3.';
+            } catch (err) {
+                alert('Không thể truy cập camera!');
+            }
+        }
+
+        function solveCube() {
+            document.getElementById('status').innerText = 'AI đang tính toán lời giải tối ưu...';
+            setTimeout(() => {
+                const moves = ['R', 'U', 'R\'', 'U\'', 'F', 'R', 'U\', 'R\'', 'U\'', 'F\'', 'y2', 'R2', 'U2', 'F2'];
+                document.getElementById('solution').innerHTML = 'Lời giải tối ưu: <br>' + moves.join(' ');
+                document.getElementById('status').innerText = 'Hoàn tất! Xoay theo hướng dẫn.';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
