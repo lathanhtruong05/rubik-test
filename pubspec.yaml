@@ -1,0 +1,14 @@
+name: rubik_test
+description: Test build IPA tren GitHub Actions.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
